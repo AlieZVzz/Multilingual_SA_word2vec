@@ -23,15 +23,15 @@ with open(Config.validation_path, 'r', encoding='UTF-8') as f:
 class TokenEmbedding:
     """Token Embedding."""
 
-    def __init__(self, data_dir):
-        self.idx_to_token, self.idx_to_vec = self._load_embedding(data_dir)
+    def __init__(self, vec_dir):
+        self.idx_to_token, self.idx_to_vec = self._load_embedding(vec_dir)
         self.unknown_idx = 0
         self.token_to_idx = {
             token: idx for idx, token in enumerate(self.idx_to_token)}
 
-    def _load_embedding(self, data_dir):
+    def _load_embedding(self, vec_dir):
         idx_to_token, idx_to_vec = ['<unk>'], []
-        with open(os.path.join(data_dir, 'sgns.sogounews.bigram-char'), 'r', encoding='utf-8', errors='ignore') as f:
+        with open(vec_dir, 'r', encoding='utf-8', errors='ignore') as f:
             for line in f:
                 elems = line.rstrip().split(' ')
                 token, elems = elems[0], [float(elem) for elem in elems[1:]]

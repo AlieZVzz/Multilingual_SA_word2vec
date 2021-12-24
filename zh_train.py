@@ -134,7 +134,7 @@ if __name__ == '__main__':
     save_path = 'save/zh_BiLSTM'
     model = BiRNN(len(vocab), Config.embedding_dim, Config.hidden_dim, Config.layer_size).cuda()
     model.apply(init_weights)
-    glove_embedding = TokenEmbedding(data_dir='data/glove.6B.100d')
+    glove_embedding = TokenEmbedding(vec_dir='data/sgns.sogounews.bigram-char')
     embeds = glove_embedding[vocab.idx_to_token]
     model.embedding.weight.data.copy_(embeds)
     model.embedding.weight.requires_grad = False

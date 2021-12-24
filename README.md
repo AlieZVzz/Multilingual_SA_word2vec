@@ -1,5 +1,5 @@
 ## Text-classification 电影评论情感分类
-基于pytorch，使用LSTM和LSTM+Attention来进行文本二分类  
+基于pytorch，使用word2vec+LSTM来进行文本二分类  
 
 ## 环境
 * python3
@@ -13,8 +13,6 @@
   测试集：包含360条左右中文电影评论，其中正负向评论各180条左右。  
 
 ## 结果
- 模型  | Acc  
- ---- | ----- 
- LSTM  | 0.847
- LSTM+Attention  | 0.856 
-
+ 模型  | Acc
+ eng_LSTM | 0.878560
+ zh_LSTM  | 0.890426
