@@ -109,7 +109,7 @@ def train_and_eval(train_data, validation_data, criterion):
     torch.save(best_model.state_dict(), 'model/eng_BiLSTM.pth')
     np.save(os.path.join(save_path, 'train_acc.npy'), np.array(train_dict['train_acc']))
     np.save(os.path.join(save_path, 'val_acc.npy'), np.array(train_dict['validation_acc']))
-    np.save(os.path.join(save_path, 'val_acc.npy'), np.array(train_dict['validation_loss']))
+    np.save(os.path.join(save_path, 'val_loss.npy'), np.array(train_dict['validation_loss']))
 
 
 if __name__ == '__main__':

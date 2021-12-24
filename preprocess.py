@@ -1,7 +1,6 @@
 from Config import *
 import torch
 import d2l.torch as d2l
-import os
 
 x_train = []
 y_train = []

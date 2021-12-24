@@ -6,13 +6,11 @@ import torch.nn.functional as F
 
 
 class BiRNN(nn.Module):
-    def __init__(self, vocab_size, embed_size, num_hiddens,
-                 num_layers, **kwargs):
+    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, **kwargs):
         super(BiRNN, self).__init__(**kwargs)
         self.embedding = nn.Embedding(vocab_size, embed_size)
         # 将bidirectional设置为True以获取双向循环神经网络
-        self.encoder = nn.LSTM(embed_size, num_hiddens, num_layers=num_layers,
-                               bidirectional=True)
+        self.encoder = nn.LSTM(embed_size, num_hiddens, num_layers=num_layers, bidirectional=True)
         self.decoder = nn.Linear(4 * num_hiddens, 2)
 
     def forward(self, inputs):
