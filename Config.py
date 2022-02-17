@@ -1,17 +1,16 @@
 class Config(object):
     train_path = 'Dataset/eng_train.txt'
     validation_path = 'Dataset/eng_validation.txt'
-    test_path = 'Dataset/baidu_zh_token.txt'
+    test_path = 'Dataset/eng_validation.txt'
     epoch = 20
 
-    embedding_dim = 300
-    hidden_dim = 100
+    embed_size = 100
+    num_hiddens = 100
     batch_size = 64
     momentum = 0.9
+    num_layers = 2
 
     lr = 1e-3
-
-    layer_size = 2
 
     bidirectional = True
     if bidirectional:
@@ -24,4 +23,3 @@ class Config(object):
     filter_num = 64
     filter_sizes = '3,4,5'
     dropout = 0.2
-
