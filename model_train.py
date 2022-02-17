@@ -119,7 +119,7 @@ if __name__ == '__main__':
     train_dict = {'train_acc': [], 'train_loss': [], 'validation_acc': [], 'validation_loss': []}
     logger = get_logger('log/eng_BiLSTM.log')
     save_path = 'save/eng_BiLSTM'
-    model = BiRNN(len(vocab), Config.embed_size, Config.num_hiddens, Config.num_layers).cuda()
+    model = BiRNN(len(vocab), Config.embed_size, Config.num_hiddens, Config.num_layers, bidierction=Config.bidirectional).cuda()
     model.apply(init_weights)
     glove_embedding = TokenEmbedding('data/glove.6b.100d/vec.txt')
     embeds = glove_embedding[vocab.idx_to_token]

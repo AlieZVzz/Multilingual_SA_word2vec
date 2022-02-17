@@ -1,16 +1,15 @@
 import torch
 import torch.nn as nn
 from Config import *
-from torch.autograd import Variable
 import torch.nn.functional as F
 
 
 class BiRNN(nn.Module):
-    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, **kwargs):
-        super(BiRNN, self).__init__(**kwargs)
+    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, bidierction, **kwargs):
+        super(BiRNN, self).__init__()
         self.embedding = nn.Embedding(vocab_size, embed_size)
         # 将bidirectional设置为True以获取双向循环神经网络
-        self.encoder = nn.LSTM(embed_size, num_hiddens, num_layers=num_layers, bidirectional=True)
+        self.encoder = nn.LSTM(embed_size, num_hiddens, num_layers=num_layers, bidirectional=bidierction)
         self.decoder = nn.Linear(4 * num_hiddens, 2)
 
     def forward(self, inputs):
@@ -30,65 +29,6 @@ class BiRNN(nn.Module):
         return outs
 
 
-class LSTM_Attention(nn.Module):
-    def __init__(self, vocab_size, tag_size):
-        super(LSTM_Attention, self).__init__()
-        self.embed = nn.Embedding(vocab_size, Config.embedding_dim)
-        self.lstm = nn.LSTM(input_size=Config.embedding_dim, hidden_size=Config.hidden_dim,
-                            bidirectional=Config.bidirectional)
-        self.classify = nn.Linear(
-            Config.hidden_dim * Config.num_direction, tag_size)
-
-        self.w_omega = Variable(torch.zeros(
-            Config.hidden_dim * Config.num_direction, Config.attention_size)).cuda()
-        self.u_omega = Variable(torch.zeros(Config.attention_size)).cuda()
-
-    def attention_net(self, out):
-        # out:[seq_len, batch_size, hidden_dim * num_direction]
-
-        output_reshape = torch.Tensor.reshape(out, [-1,
-                                                    Config.hidden_dim * Config.num_direction])  # [seq_len * batch_size, hidden_dim * num_direction]
-
-        # [seq_len * batch_size, attention_size]
-        attn_tanh = torch.tanh(torch.mm(output_reshape, self.w_omega))
-
-        attn_hidden_layer = torch.mm(attn_tanh,
-                                     torch.Tensor.reshape(self.u_omega, [-1, 1]))  # [seq_len * batch_size, 1]
-
-        exps = torch.Tensor.reshape(torch.exp(
-            attn_hidden_layer), [-1, Config.sequence_length])  # [batch_size, seq_len]
-
-        # [batch_size, seq_len]
-        alphas = exps / torch.Tensor.reshape(torch.sum(exps, 1), [-1, 1])
-
-        alphas_reshape = torch.Tensor.reshape(
-            alphas, [-1, Config.sequence_length, 1])  # [batch_size, seq_len, 1]
-
-        # [batch_size, seq_len, hidden_dim * num_direction]
-        state = out.permute(1, 0, 2)
-
-        # [batch_size, hidden_dim * num_direction]
-        attn_output = torch.sum(state * alphas_reshape, 1)
-
-        return attn_output
-
-    def forward(self, input):
-        # seq_len = 60  句子长度
-
-        # [64, 60, 100]  [batch_size, seq_len, hidden_dim]
-        input = self.embed(input)
-        input = input.permute(1, 0, 2)
-
-        # [60, 64, 100]  [seq_len, batch_size, hidden_dim * num_direction]
-        out, _ = self.lstm(input)
-
-        attn_output = self.attention_net(out)
-
-        out = self.classify(attn_output)  # [64, 2]
-
-        return out
-
-
 class TextCNN(nn.Module):
     def __init__(self, vocab_size, tag_size):
         super(TextCNN, self).__init__()
@@ -98,9 +38,9 @@ class TextCNN(nn.Module):
         filter_sizes = [int(fsz) for fsz in Config.filter_sizes.split(',')]
 
         vocab_size = vocab_size
-        embedding_dim = Config.embedding_dim
+        embedding_dim = Config.embed_size
 
-        self.embedding = nn.Embedding(vocab_size, Config.embedding_dim)
+        self.embedding = nn.Embedding(vocab_size, Config.embed_size)
         self.convs = nn.ModuleList(
             [nn.Conv2d(1, filter_num, (fsz, embedding_dim)) for fsz in filter_sizes])
         self.dropout = nn.Dropout(Config.dropout)
