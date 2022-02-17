@@ -1,1 +1,49 @@
-[2022-02-17 15:17:52,643][eng_train.py][line:65][INFO] start training!
+[2021-12-24 18:41:03,493][eng_train.py][line:67][INFO] start training!
+[2021-12-24 18:43:31,559][eng_train.py][line:97][INFO] epoch [1]: train loss is:0.010203,train acc is:0.613525
+[2021-12-24 18:43:37,291][eng_train.py][line:60][INFO] validation loss is:0.009377,validation acc is:0.674446
+[2021-12-24 18:43:37,292][eng_train.py][line:106][INFO] best model is changed, best acc is 0.674446
+[2021-12-24 18:46:05,100][eng_train.py][line:97][INFO] epoch [2]: train loss is:0.006621,train acc is:0.809814
+[2021-12-24 18:46:10,846][eng_train.py][line:60][INFO] validation loss is:0.005254,validation acc is:0.836234
+[2021-12-24 18:46:10,846][eng_train.py][line:106][INFO] best model is changed, best acc is 0.836234
+[2021-12-24 18:48:39,367][eng_train.py][line:97][INFO] epoch [3]: train loss is:0.004904,train acc is:0.864102
+[2021-12-24 18:48:45,099][eng_train.py][line:60][INFO] validation loss is:0.004369,validation acc is:0.868078
+[2021-12-24 18:48:45,099][eng_train.py][line:106][INFO] best model is changed, best acc is 0.868078
+[2021-12-24 18:51:13,080][eng_train.py][line:97][INFO] epoch [4]: train loss is:0.004309,train acc is:0.882058
+[2021-12-24 18:51:18,814][eng_train.py][line:60][INFO] validation loss is:0.004183,validation acc is:0.879153
+[2021-12-24 18:51:18,814][eng_train.py][line:106][INFO] best model is changed, best acc is 0.879153
+[2021-12-24 18:53:46,815][eng_train.py][line:97][INFO] epoch [5]: train loss is:0.003932,train acc is:0.894975
+[2021-12-24 18:53:52,556][eng_train.py][line:60][INFO] validation loss is:0.004426,validation acc is:0.871835
+[2021-12-24 18:56:21,850][eng_train.py][line:97][INFO] epoch [6]: train loss is:0.003582,train acc is:0.904874
+[2021-12-24 18:56:27,612][eng_train.py][line:60][INFO] validation loss is:0.003898,validation acc is:0.890032
+[2021-12-24 18:56:27,612][eng_train.py][line:106][INFO] best model is changed, best acc is 0.890032
+[2021-12-24 18:58:55,717][eng_train.py][line:97][INFO] epoch [7]: train loss is:0.003235,train acc is:0.914506
+[2021-12-24 18:59:01,482][eng_train.py][line:60][INFO] validation loss is:0.003709,validation acc is:0.892405
+[2021-12-24 18:59:01,483][eng_train.py][line:106][INFO] best model is changed, best acc is 0.892405
+[2021-12-24 19:01:29,023][eng_train.py][line:97][INFO] epoch [8]: train loss is:0.002899,train acc is:0.925559
+[2021-12-24 19:01:34,782][eng_train.py][line:60][INFO] validation loss is:0.004099,validation acc is:0.888252
+[2021-12-24 19:04:02,386][eng_train.py][line:97][INFO] epoch [9]: train loss is:0.002543,train acc is:0.936057
+[2021-12-24 19:04:08,107][eng_train.py][line:60][INFO] validation loss is:0.004641,validation acc is:0.885878
+[2021-12-24 19:06:35,743][eng_train.py][line:97][INFO] epoch [10]: train loss is:0.002199,train acc is:0.944513
+[2021-12-24 19:06:41,484][eng_train.py][line:60][INFO] validation loss is:0.004034,validation acc is:0.893394
+[2021-12-24 19:06:41,484][eng_train.py][line:106][INFO] best model is changed, best acc is 0.893394
+[2021-12-24 19:09:09,039][eng_train.py][line:97][INFO] epoch [11]: train loss is:0.001783,train acc is:0.956632
+[2021-12-24 19:09:14,793][eng_train.py][line:60][INFO] validation loss is:0.004605,validation acc is:0.892009
+[2021-12-24 19:11:42,374][eng_train.py][line:97][INFO] epoch [12]: train loss is:0.001426,train acc is:0.967130
+[2021-12-24 19:11:48,137][eng_train.py][line:60][INFO] validation loss is:0.004954,validation acc is:0.885680
+[2021-12-24 19:14:15,748][eng_train.py][line:97][INFO] epoch [13]: train loss is:0.001134,train acc is:0.974121
+[2021-12-24 19:14:21,498][eng_train.py][line:60][INFO] validation loss is:0.005362,validation acc is:0.887658
+[2021-12-24 19:16:49,145][eng_train.py][line:97][INFO] epoch [14]: train loss is:0.000961,train acc is:0.978516
+[2021-12-24 19:16:54,879][eng_train.py][line:60][INFO] validation loss is:0.006067,validation acc is:0.878956
+[2021-12-24 19:19:22,356][eng_train.py][line:97][INFO] epoch [15]: train loss is:0.000787,train acc is:0.982932
+[2021-12-24 19:19:28,103][eng_train.py][line:60][INFO] validation loss is:0.006535,validation acc is:0.885878
+[2021-12-24 19:21:55,678][eng_train.py][line:97][INFO] epoch [16]: train loss is:0.000662,train acc is:0.985263
+[2021-12-24 19:22:01,445][eng_train.py][line:60][INFO] validation loss is:0.006245,validation acc is:0.886274
+[2021-12-24 19:24:28,982][eng_train.py][line:97][INFO] epoch [17]: train loss is:0.000594,train acc is:0.986528
+[2021-12-24 19:24:34,708][eng_train.py][line:60][INFO] validation loss is:0.007346,validation acc is:0.885680
+[2021-12-24 19:27:02,242][eng_train.py][line:97][INFO] epoch [18]: train loss is:0.000492,train acc is:0.988858
+[2021-12-24 19:27:08,000][eng_train.py][line:60][INFO] validation loss is:0.007137,validation acc is:0.887263
+[2021-12-24 19:29:35,596][eng_train.py][line:97][INFO] epoch [19]: train loss is:0.000428,train acc is:0.990834
+[2021-12-24 19:29:41,347][eng_train.py][line:60][INFO] validation loss is:0.007556,validation acc is:0.886076
+[2021-12-24 19:32:08,974][eng_train.py][line:97][INFO] epoch [20]: train loss is:0.000404,train acc is:0.990523
+[2021-12-24 19:32:14,704][eng_train.py][line:60][INFO] validation loss is:0.007968,validation acc is:0.884296
+[2021-12-24 19:32:14,704][eng_train.py][line:108][INFO] finish training!
