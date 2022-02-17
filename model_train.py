@@ -1,6 +1,4 @@
-import torch
-import d2l.torch as d2l
-from preprocess import load_data
+from preprocess import *
 from Config import *
 import torch.nn as nn
 from tqdm import tqdm
@@ -9,7 +7,7 @@ from sklearn.metrics import accuracy_score
 import numpy as np
 import os
 from torch.autograd import Variable
-from SAmodel import BiRNN
+from sentiment_analysis_model import BiRNN
 
 
 def init_weights(m):
@@ -73,10 +71,8 @@ def train_and_eval(train_data, validation_data, criterion):
         for i, data in tqdm(enumerate(train_data), total=len(train_data)):
             x, y = data
             x, y = Variable(x).cuda(), Variable(y).cuda()
-
             # forward
             out = model(x)
-
             loss = criterion(out, y)
             pred = out.argmax(axis=1)
             # _, pre = torch.max(out, 1)
@@ -113,32 +109,23 @@ def train_and_eval(train_data, validation_data, criterion):
 
 
 if __name__ == '__main__':
-    x_train = []
-    y_train = []
-    x_validation = []
-    y_validation = []
-    with open(Config.train_path, 'r', encoding='UTF-8') as f:
-        for line in f.readlines():
-            data = line.strip().split('\t')
-            y_train.append(int(data[0]))
-            x_train.append(data[1].strip().split())
-
-    with open(Config.validation_path, 'r', encoding='UTF-8') as f:
-        for line in f.readlines():
-            data = line.strip().split('\t')
-            y_validation.append(int(data[0]))
-            x_validation.append(data[1].strip().split())
-    train_iter, val_iter, vocab = load_data(x_train, y_train, batch_size=64)
+    train_data = Dataset(Config.train_path, 500)
+    val_data = Dataset(Config.validation_path, 500)
+    train_iter = DataLoader(train_data, batch_size=Config.batch_size, shuffle=True)
+    val_iter = DataLoader(val_data, batch_size=Config.batch_size, shuffle=False)
+    print('数据构建完毕')
+    vocab = train_data.vocab
+    print(len(vocab))
     train_dict = {'train_acc': [], 'train_loss': [], 'validation_acc': [], 'validation_loss': []}
     logger = get_logger('log/eng_BiLSTM.log')
     save_path = 'save/eng_BiLSTM'
-    embed_size, num_hiddens, num_layers = 100, 100, 2
-    model = BiRNN(len(vocab), embed_size, num_hiddens, num_layers).cuda()
+    model = BiRNN(len(vocab), Config.embed_size, Config.num_hiddens, Config.num_layers).cuda()
     model.apply(init_weights)
-    glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
+    glove_embedding = TokenEmbedding('data/glove.6b.100d/vec.txt')
     embeds = glove_embedding[vocab.idx_to_token]
     model.embedding.weight.data.copy_(embeds)
     model.embedding.weight.requires_grad = False
     criterion = nn.CrossEntropyLoss()
     optimzier = torch.optim.Adam(model.parameters(), lr=Config.lr)
+    print('Start Training')
     train_and_eval(train_iter, val_iter, criterion)
