@@ -1,1 +1,6 @@
-[2022-02-17 15:17:52,643][eng_train.py][line:65][INFO] start training!
+[2022-02-21 23:05:24,748][model_train.py][line:117][INFO] 数据构建完毕
+[2022-02-21 23:05:24,748][model_train.py][line:119][INFO] 训练集词表长度为49221
+[2022-02-21 23:05:40,534][model_train.py][line:65][INFO] start training!
+[2022-02-21 23:08:10,450][model_train.py][line:93][INFO] epoch [1]: train loss is:0.009722,train acc is:0.646262
+[2022-02-21 23:08:16,245][model_train.py][line:58][INFO] validation loss is:0.012800,validation acc is:0.515823
+[2022-02-21 23:08:16,246][model_train.py][line:102][INFO] best model is changed, best acc is 0.515823

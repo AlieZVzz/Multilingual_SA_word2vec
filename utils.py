@@ -1,10 +1,6 @@
-from Config import *
 from torch.utils.data import DataLoader
 import torch
 import collections
-
-# import d2l.torch as d2l
-
 
 
 class TokenEmbedding:
@@ -124,5 +120,3 @@ class Dataset(torch.utils.data.Dataset):
 
     def __vocab__(self):
         return self.vocab
-
-

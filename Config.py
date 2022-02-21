@@ -9,6 +9,7 @@ class Config(object):
     batch_size = 64
     momentum = 0.9
     num_layers = 2
+    pad_length = 500
 
     lr = 1e-3
 

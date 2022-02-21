@@ -1,4 +1,4 @@
-from preprocess import *
+from utils import *
 from Config import *
 import torch.nn as nn
 from tqdm import tqdm
@@ -76,10 +76,10 @@ def train_and_eval(train_data, validation_data, criterion):
             loss = criterion(out, y)
             pred = out.argmax(axis=1)
             # _, pre = torch.max(out, 1)
-            num_acc = (pred.type(y.dtype) == y).type(y.dtype).sum()
-            train_acc += num_acc.data.item()
             true_label = np.append(true_label, y.tolist())
             pred_label = np.append(pred_label, pred.tolist())
+            num_acc = (pred == y).sum()
+            train_acc += num_acc.data.item()
             # backward
             optimzier.zero_grad()
             loss.backward()
@@ -109,23 +109,24 @@ def train_and_eval(train_data, validation_data, criterion):
 
 
 if __name__ == '__main__':
-    train_data = Dataset(Config.train_path, 500)
-    val_data = Dataset(Config.validation_path, 500)
+    logger = get_logger('log/eng_BiLSTM.log')
+    train_data = Dataset(Config.train_path, Config.pad_length)
+    val_data = Dataset(Config.validation_path, Config.pad_length)
     train_iter = DataLoader(train_data, batch_size=Config.batch_size, shuffle=True)
     val_iter = DataLoader(val_data, batch_size=Config.batch_size, shuffle=False)
-    print('数据构建完毕')
+    logger.info('Finish constructing data')
     vocab = train_data.vocab
-    print(len(vocab))
+    logger.info("Vocab length is {}".format(len(vocab)))
     train_dict = {'train_acc': [], 'train_loss': [], 'validation_acc': [], 'validation_loss': []}
-    logger = get_logger('log/eng_BiLSTM.log')
     save_path = 'save/eng_BiLSTM'
-    model = BiRNN(len(vocab), Config.embed_size, Config.num_hiddens, Config.num_layers, bidierction=Config.bidirectional).cuda()
+    model = BiRNN(len(vocab), Config.embed_size, Config.num_hiddens, Config.num_layers,
+                  bidierction=Config.bidirectional).cuda()
     model.apply(init_weights)
-    glove_embedding = TokenEmbedding('data/glove.6b.100d/vec.txt')
+    glove_embedding = TokenEmbedding(
+        'D:\OneDrive - alumni.albany.edu\Pycharm Project\Pretrained_Model\glove.6B.100d.txt')
     embeds = glove_embedding[vocab.idx_to_token]
     model.embedding.weight.data.copy_(embeds)
     model.embedding.weight.requires_grad = False
     criterion = nn.CrossEntropyLoss()
     optimzier = torch.optim.Adam(model.parameters(), lr=Config.lr)
-    print('Start Training')
     train_and_eval(train_iter, val_iter, criterion)

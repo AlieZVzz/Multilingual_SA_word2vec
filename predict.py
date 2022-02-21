@@ -1,13 +1,10 @@
 import torch.nn as nn
-import torch
-from Config import *
 from torch.autograd import Variable
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sentiment_analysis_model import BiRNN
 import numpy as np
-import d2l.torch as d2l
-from preprocess import *
+from utils import *
 
 
 def evaluate(model, test_data, criterion):
@@ -25,10 +22,10 @@ def evaluate(model, test_data, criterion):
         out = model(x)
         loss = criterion(out, y)
         test_loss += loss.data.item()
-        _, pre = torch.max(out, 1)
+        _, pred = torch.max(out, 1)
         true_label = np.append(true_label, y.tolist())
-        pred_label = np.append(pred_label, pre.tolist())
-        num_acc = (pre == y).sum()
+        pred_label = np.append(pred_label, pred.tolist())
+        num_acc = (pred == y).sum()
         test_acc += num_acc.data.item()
 
     print('test loss is:{:.6f},test acc is:{:.6f}'
@@ -39,10 +36,11 @@ def evaluate(model, test_data, criterion):
     return sk_acc, test_acc, test_loss, confusion_m
 
 
-test_data = Dataset(Config.validation_path, num_steps=500)
+test_data = Dataset(Config.validation_path, num_steps=Config.pad_length)
 test_iter = DataLoader(test_data, batch_size=64)
 state_dict = torch.load('model/eng_BiLSTM.pth', map_location='cuda')
-model = BiRNN(49221, embed_size=Config.embed_size, num_hiddens=Config.num_hiddens, num_layers=Config.num_layers)
+model = BiRNN(49221, embed_size=Config.embed_size, num_hiddens=Config.num_hiddens, num_layers=Config.num_layers,
+              bidierction=Config.bidirectional)
 model.load_state_dict(state_dict=state_dict)
 criterion = nn.CrossEntropyLoss()
 sk_loss, eval_acc, eval_loss, matrix = evaluate(model, test_iter, criterion=criterion)
